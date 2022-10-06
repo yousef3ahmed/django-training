@@ -56,7 +56,7 @@
 ...     if e.was_released_before_today():
 ...             records.append( e )
 ... 
->>> print( records  ) 
+>>> print( records ) 
 []
 ```
 ## count the total number of albums
@@ -68,6 +68,6 @@
 ```
 >>> Album.objects.order_by('-cost' , 'name')                                                             
 <QuerySet [<Album: Name = New Album --- Artist = ali>, <Album: Name = New Album --- Artist = yousef>, <Album: Name = New Album --- Artist = yousef>]>
-```
+``` 
 
 
