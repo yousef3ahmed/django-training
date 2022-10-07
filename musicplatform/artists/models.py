@@ -11,7 +11,7 @@ import datetime
 # default require
 class Artist( models.Model ):
     Stage = models.CharField( max_length = 200 , unique = True , blank = False )
-    Social_link = models.CharField( max_length = 100 , blank = True  )
+    Social_link = models.URLField( max_length = 100 , blank = True  )
     def __str__(self) -> str:
         return "Stage = " + self.Stage + " --- Social = " + self.Social_link
 
