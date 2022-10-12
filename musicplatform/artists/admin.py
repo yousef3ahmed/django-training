@@ -1,7 +1,22 @@
+from dataclasses import field
 from django.contrib import admin
 
 # Register your models here.
 from .models import Artist , Album
 
-admin.site.register( Artist )
-admin.site.register( Album )
+class InlineAlbum( admin.StackedInline ):
+	model = Album
+	extra = 1
+
+
+class TopicAlbum( admin.ModelAdmin ):
+ readonly_fields=('pub_date',)
+
+class TopicArtist( admin.ModelAdmin ):
+ list_display = ( 'Stage' , 'Social_link' , 'approved_albums' )
+ inlines = [ InlineAlbum ] 
+
+
+
+admin.site.register( Artist , TopicArtist )
+admin.site.register( Album , TopicAlbum )

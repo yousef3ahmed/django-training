@@ -66,5 +66,16 @@
 >>> Album.objects.order_by('-cost' , 'name')                                                             
 <QuerySet [<Album: Name = New Album --- Artist = ali>, <Album: Name = New Album --- Artist = yousef>, <Album: Name = New Album --- Artist = yousef>]>
 ``` 
-
+## album name shouldn't contain inappropriate expressions
+```
+>>> from django.utils import timezone
+>>>
+>>> p = Album( artist = Artist.objects.get(pk=2) , name = "God-damned", pub_date = timezone.now() , release = timezone.now() , cost = '16877.86')
+>>> p.save()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "D:\bld.ai\projects\Back_end\django_project\musicplatform\artists\models.py", line 49, in save
+    raise ValidationError( "album name shouldn't contain inappropriate expressions !!" )
+django.core.exceptions.ValidationError: ["album name shouldn't contain inappropriate expressions !!"]
+```
 
