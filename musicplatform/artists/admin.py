@@ -1,5 +1,6 @@
 from dataclasses import field
 from django.contrib import admin
+from .models import Artist , Album
 
 # Register your models here.
 from .models import Artist , Album

@@ -62,7 +62,7 @@ class Artist( models.Model ):
     Stage = models.CharField( max_length = 200 , unique = True , blank = False  )
     Social_link = models.URLField( max_length = 100 , blank = True  )
     def __str__(self) -> str:
-        return "Stage = " + self.Stage + " --- Social = " + self.Social_link
+        return "Stage = " + self.Stage + " <----------------------> Social = " + self.Social_link
    
     def approved_albums(self):
         return self.album_set.filter(album_is_approved=True).count()
@@ -76,7 +76,7 @@ class Album( TimeStampedModel ):
     album_is_approved  = models.BooleanField( default = True , help_text = " Approve the album if its name is not explicit" )
 
     def __str__(self) -> str:
-        return "Name = " + self.name + " --- Artist = " + self.artist.Stage
+        return "Name = " + self.name + " <----------------------> Artist = " + self.artist.Stage
     
     def save(self, *args, **kwargs):
         f = open("./badwords.txt" , "r")
