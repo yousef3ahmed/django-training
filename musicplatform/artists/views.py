@@ -5,8 +5,6 @@ from .models import Artist , Album
 from .forms import AlbumForm , ArtistForm
 
 
-# Artist.objects.prefetch_related('album_set').all()
-
 def list_artist(request):
     context = {'artist_list' :  Artist.objects.all()}
     return render(request,'artists/fetch.html',context)

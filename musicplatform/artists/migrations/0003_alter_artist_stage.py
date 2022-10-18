@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='artist',
             name='Stage',
-            field=models.CharField(max_length=200, unique=True, validators=[artists.models.validate]),
+            field=models.CharField(max_length=200, unique=True),
         ),
     ]

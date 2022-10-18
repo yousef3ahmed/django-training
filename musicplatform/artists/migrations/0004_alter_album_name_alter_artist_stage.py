@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='album',
             name='name',
-            field=models.CharField(default='New Album', max_length=200, validators=[artists.models.validate], verbose_name='New Album'),
+            field=models.CharField(default='New Album', max_length=200,  verbose_name='New Album'),
         ),
         migrations.AlterField(
             model_name='artist',
