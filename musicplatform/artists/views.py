@@ -11,17 +11,12 @@ def list_artist(request):
 
 def create_artist(request):
     
-    def add_artist( Stages , Social_links  ):
-        create = Artist( Stage = Stages  , Social_link = Social_links )
-        create.save()
-
     passed = 1
     if request.method == 'POST':
         form = ArtistForm(request.POST)
         if form.is_valid():
-            Stage = form.cleaned_data['Stage']
-            Social_link = form.cleaned_data['Social_link']
-            add_artist( Stage , Social_link )
+
+            form.save()
             return HttpResponse("thanks you, the record added successful.")
         else:
             passed = 0
@@ -34,20 +29,11 @@ def create_artist(request):
 
 def create_album(request):
     
-    def add_album( artist , names , costs  , album_is_approveds ):
-        art = Artist.objects.get( Stage = artist)
-        create = Album( artist = art  , name  = names , cost = costs , album_is_approved = album_is_approveds )
-        create.save()
-
     passed = 1
     if request.method == 'POST':
         form = AlbumForm(request.POST)
         if form.is_valid():
-            artist = form.cleaned_data['artist']
-            name = form.cleaned_data['name']
-            cost = form.cleaned_data['cost']
-            album_is_approved = form.cleaned_data['album_is_approved']
-            add_album( artist , name , cost , album_is_approved )
+            form.save()
             return HttpResponse("thanks you, the record added successful.")
         else:
             passed = 0

@@ -1,28 +1,24 @@
-from tabnanny import check
 from django import forms
+from dataclasses import field
+from django.forms import ModelForm
 from .models import Artist , Album
+from datetime import datetime
+from .widget import MyDateTimeInput
+
+class AlbumForm(ModelForm):
+    
+    class Meta:
+       model = Album
+       fields = '__all__'
+       widgets = {
+            'release' : MyDateTimeInput()
+        }
 
 
-class AlbumForm(forms.Form):
-    artist = forms.CharField( label='artist name', max_length=100)
-    name = forms.CharField( )
-    cost = forms.DecimalField( max_digits = 20 , decimal_places = 2 )
-    album_is_approved = forms.BooleanField(  help_text = " Approve the album if its name is not explicit" )
-
-
-    def is_valid(self) -> bool:     
-        artist = self.data['artist']
-        records = Artist.objects.filter( Stage = artist ).count()
-
-        if records == 0 :
-          return False
-
-        return super().is_valid()
-
-
-class ArtistForm( forms.Form ):
-    Stage = forms.CharField( )
-    Social_link = forms.CharField( )
+class ArtistForm (ModelForm):
+    class Meta:
+        model = Artist
+        fields = '__all__'
 
     def is_valid(self) -> bool:
         name = self.data['Stage']
