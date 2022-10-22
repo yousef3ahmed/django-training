@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h2 style="display:flex ; align-self: center; align-items: center; " > Welcome  {{user.username}}</h2>
+    
+    <h3 style=" align-items:center ; align-self: center ; " > List Artists </h3>
+    
+    <ul>
+    {% for art in artist_list %}
+        <li style="font-size: 17px;" > {{ art }} </li> 
+        <ul>
+            {% for assgin in art.album_set.all %}
+            <li  > {{ assgin }} </li> 
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    </ul>
+   
+</body>
+</html>
