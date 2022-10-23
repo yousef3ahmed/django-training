@@ -1,3 +1,8 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,9 +11,7 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <h2 style="display:flex ; align-self: center; align-items: center; " > Welcome  {{user.username}}</h2>
-    
+        
     <h3 style=" align-items:center ; align-self: center ; " > List Artists </h3>
     
     <ul>
@@ -24,3 +27,4 @@
    
 </body>
 </html>
+{% endblock %}
