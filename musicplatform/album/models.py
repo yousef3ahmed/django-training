@@ -20,7 +20,7 @@ class Album( TimeStampedModel ):
 
 class Song( models.Model ):
     album = models.ForeignKey( Album , on_delete = models.CASCADE )
-    name = models.CharField( max_length = 200  , help_text = "if no name is provided, the song's name defaults to the album name" )
+    name = models.CharField( max_length = 200  , blank  = True , help_text = "if no name is provided, the song's name defaults to the album name" )
     img = models.ImageField( blank  = False )
     thumbnail = ImageSpecField(format='JPEG')    
     
