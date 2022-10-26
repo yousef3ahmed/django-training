@@ -3,18 +3,25 @@ from django.shortcuts import render
 
 from django.http import HttpResponseRedirect , HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import FormView
 
 
 
-def logout_view(request):
-    logout(request)
-    return HttpResponse("thanks you, i am logout successful.")
+class logout_view( FormView ):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponse("thanks you, i am logout successful.")
 
-def user_login(request):
 
+
+class user_login( FormView ):
     form = AuthenticationForm()
 
-    if request.method == 'POST':
+    def get(self, request, *args, **kwargs):
+        return render(request, 'login.html' , { 'form' : self.form })
+
+
+    def post(self, request, *args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
@@ -22,6 +29,5 @@ def user_login(request):
             login(request, user)
             return HttpResponse("thanks you, i am login successful.")
         else:
-            return render(request, 'login.html', {'error_message': 'Incorrect username and / or password.' , 'form' : form } )
-    else:
-        return render(request, 'login.html' , { 'form' : form })
+            return render(request, 'login.html', {'error_message': 'Incorrect username and / or password.' , 'form' : self.form } )
+
