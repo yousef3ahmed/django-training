@@ -1,45 +1,35 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from .models import Artist , Album
-from .forms import AlbumForm , ArtistForm
+from .models import Artist 
+from .forms import ArtistForm
+from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 
 
-def list_artist(request):
-    context = {'artist_list' :  Artist.objects.all()}
-    return render(request,'artists/fetch.html',context)
 
-def create_artist(request):
-    
-    passed = 1
-    if request.method == 'POST':
+class list_artist(View):
+    template_name = 'artists/fetch.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {'artist_list' :  Artist.objects.all()}
+        return render(request,self.template_name,context)
+
+
+class create_artist( View ):
+    template_name = 'artists/add_artist.html'
+
+    def post(self, request, *args, **kwargs):
         form = ArtistForm(request.POST)
         if form.is_valid():
-
             form.save()
             return HttpResponse("thanks you, the record added successful.")
         else:
-            passed = 0
+            return render(request, self.template_name , {'form': form } )
 
-    else:
+    def get(self, request, *args, **kwargs):
         form = ArtistForm()
+        return render(request, self.template_name , {'form': form } )
 
-    return render(request, 'artists/add_artist.html', {'form': form , 'ok' : passed} )
 
-
-def create_album(request):
-    
-    passed = 1
-    if request.method == 'POST':
-        form = AlbumForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse("thanks you, the record added successful.")
-        else:
-            passed = 0
-
-    else:
-        form = AlbumForm()
-
-    return render(request, 'artists/add_album.html', {'form': form , 'ok' : passed} )
 
