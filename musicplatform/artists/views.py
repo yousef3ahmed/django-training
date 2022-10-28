@@ -1,10 +1,31 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse
+from django.http import HttpResponse , JsonResponse
 from .models import Artist 
 from .forms import ArtistForm
 from django.views.generic import View
-from django.contrib.auth.decorators import login_required
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from artists.models import Artist
+from .serializers import ArtistSerializer
+
+
+class api_artist( APIView ):
+
+    def get(self, request, *args, **kwargs):
+        artist = Artist.objects.all()
+        serializer = ArtistSerializer( artist, many=True )
+        return JsonResponse(serializer.data, safe=False)
+
+    def post(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+        serializer = ArtistSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
 
 
