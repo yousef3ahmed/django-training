@@ -17,12 +17,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField( write_only=True, required=True , validators=[validate_password] )
     password2 = serializers.CharField( write_only=True, required=True)
 
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+
 
     def create(self, validated_data):
-        
-        if validated_data['password1'] != validated_data['password2']:
-            raise serializers.ValidationError(
-                "password didn't match confirm password.")
 
         user = User.objects.create_user(  email=validated_data['email'],
                                           username=validated_data['username'],
