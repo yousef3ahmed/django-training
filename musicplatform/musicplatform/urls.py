@@ -19,7 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path( 'accounts/' , include('accounts.urls') ),
+    path( 'user/' , include('user.urls') ),
+    path( 'authentication/' , include('authentication.urls') ),
     path( 'album/' , include('album.urls') ),
     path('artists/', include('artists.urls')),
     path("admin/", admin.site.urls),

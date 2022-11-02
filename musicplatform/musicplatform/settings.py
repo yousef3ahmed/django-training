@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "artists.apps.ArtistsConfig",
-    "accounts",
     "album",
+    "user",
     "imagekit",
     'rest_framework',
+    "knox", 
+    "django_extensions",
+    "authentication",
 ]
 
 MIDDLEWARE = [
@@ -133,3 +136,9 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'list'
+
+AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+}
