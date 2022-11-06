@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "artists.apps.ArtistsConfig",
     "album",
-    "user",
+    "user.apps.UserConfig",
     "imagekit",
     'rest_framework',
     "knox", 
