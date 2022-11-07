@@ -9,13 +9,14 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Artist
-        fields = ['id', 'Stage', 'Social_link']
+        fields = [ 'Stage', 'Social_link']
 
     
     def create(self, validated_data):
-        """
-        Create and return a new `Artist` instance, given the validated data.
-        """
+
+        # user = Artist.objects.create(  Stage = validated_data['Stage'],
+        #                                 Social_link=validated_data['Social_link'] )
+        # return user
         return Artist.objects.create(**validated_data)
 
     

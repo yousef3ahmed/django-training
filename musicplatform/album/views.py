@@ -5,6 +5,7 @@ from django.views.generic import FormView
 
 
 
+
 # Create your views here.
 class create_album( FormView ):
     template_name = 'album/add_album.html'
