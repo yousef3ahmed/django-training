@@ -22,6 +22,34 @@ def user(db):
     return user
 
 
+@pytest.fixture
+def get_client(user):
+    def api_client( user_instance = None ):
+        
+        if user_instance is None:  
+            client = APIClient()  
+            response = client.post('http://127.0.0.1:8000/authentication/api_login', json = {
+                "username" : "YousefAhmed",
+                "password" : "root"
+            })
+            token = response.data["token"]
+            print( token )
+            client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+            return client
+        else:
+            client = APIClient()
+            random_user = User.objects.create_user(user_instance['username'], user_instance['email'], user_instance['password'])
+            login= client.post('http://127.0.0.1:8000/authentication/api_login', 
+            dict( username=user_instance["username"], 
+                  password = user_instance["password"]) )
+            token = response.data["token"]
+            client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+            return client
+    
+    return api_client
+
+
+
 
 
 @pytest.fixture()

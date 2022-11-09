@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_unAuthenticated( client ):    
+def  test_user_registration( client ):    
     response = client.post('http://127.0.0.1:8000/authentication/api_register',json={
         "username" : "yousef3ahmed",
         "email" : "activedade@gmail.com",
