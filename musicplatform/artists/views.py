@@ -17,11 +17,11 @@ class api_artist( APIView ):
     def get(self, request, *args, **kwargs):
         artist = Artist.objects.all()
         serializer = ArtistSerializer( artist, many=True )
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data, status=200)
 
     def post(self, request, *args, **kwargs):
-        data = JSONParser().parse(request)
-        serializer = ArtistSerializer(data=data)
+        # data = JSONParser().parse(request)
+        serializer = ArtistSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
