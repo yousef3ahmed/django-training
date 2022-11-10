@@ -5,11 +5,14 @@ from sre_parse import State
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.utils import timezone
+from user.models import User
 from model_utils.models import TimeStampedModel
 
 
 
 class Artist( models.Model ):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE  )
     Stage = models.CharField( max_length = 200 , unique = True , blank = False  )
     Social_link = models.URLField( max_length = 100 , blank = True  )
 
