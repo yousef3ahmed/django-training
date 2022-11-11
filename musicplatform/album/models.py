@@ -13,6 +13,7 @@ from django.core.validators import FileExtensionValidator
 
 
 
+
 class Album( TimeStampedModel ):  
     artist = models.ForeignKey( Artist , on_delete = models.CASCADE )
     name = models.CharField( max_length = 200 , default = "New Album"  ,  verbose_name = "New Album"  )
