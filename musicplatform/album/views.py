@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.exceptions import ValidationError
 from .forms import AlbumForm
 from django.views.generic import FormView
 from .models import Album, Artist
+
+from django_filters import rest_framework as filters
+from .filters import AlbumFilter
+
 from .serializers import AlbumSerializer , AlbumRequestSerializer
 from rest_framework.response import Response
 
@@ -18,6 +23,8 @@ from knox.auth import  TokenAuthentication
 class api_album( APIView ):
 
     pagination_class = LimitOffsetPagination
+    filterset_class = AlbumFilter
+    filter_backends = (filters.DjangoFilterBackend,)
 
     def get( self ,request, *args, **kwargs ):
         permission_classes = (AllowAny,)
@@ -40,6 +47,38 @@ class api_album( APIView ):
             serializer.save()
             return Response(serializer.data, status = 200 )
         return Response(serializer.errors, status = 400 )
+
+
+class AlbumListManual(APIView):
+    pagination_class = LimitOffsetPagination
+    permission_classes = (AllowAny,)
+
+    def get(self, request ,*args, **kwargs):
+        lte = request.query_params.get('cost__gte')
+        gte = request.query_params.get('cost__lte')
+        name = request.query_params.get('name')
+       
+        queryset = Album.objects.filter(album_is_approved  = True) 
+
+        try:
+            if gte is not None:
+                queryset = queryset.filter(cost__gte= gte)
+            if lte is not None:
+                queryset = queryset.filter(cost__lte=lte)
+        except:
+            raise ValidationError(
+                "cost can't be a string you should set it as an integer.")
+
+
+        if(not name is None):
+            queryset = queryset.filter(name__iexact= name).all()
+        
+        
+        
+        serializer = AlbumSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 
 
 

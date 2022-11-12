@@ -9,7 +9,7 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Artist
-        fields = [ 'Stage', 'Social_link']
+        fields = '__all__'
 
     
     def create(self, validated_data):

@@ -7,12 +7,7 @@ from artists.models import Artist
 from album.models import Album
 
 
-@pytest.fixture()
-def artists(db):
-    artists = Artist.objects.create(
-        Stage = 'Yousef_pop',
-        Social_link = 'https://www.instagram.com/yousef_amers/'
-    )
+
 
 @pytest.fixture()
 def user(db):
@@ -21,6 +16,26 @@ def user(db):
                                       password = 'root' )
     return user
 
+
+@pytest.fixture()
+def artists(db , user):
+    artists = Artist.objects.create(
+        user = user,
+        Stage = 'Yousef_pop',
+        Social_link = 'https://www.instagram.com/yousef_amers/'
+    )
+    return artists
+
+@pytest.fixture()
+def album(db , artists):
+    album = Album.objects.create(
+        artist = artists,
+        name = "i am test__",
+        release = "2022-11-10",
+        cost = 234.23,
+        album_is_approved = True
+    )
+    return album
 
 @pytest.fixture
 def get_client(user):
@@ -58,6 +73,8 @@ def auth_client(user):
     _, token = AuthToken.objects.create(user)
     client.credentials(HTTP_AUTHORIZATION='Token ' + token)
     return client
+
+
 
 
 
