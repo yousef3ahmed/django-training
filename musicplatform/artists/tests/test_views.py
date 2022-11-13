@@ -10,15 +10,20 @@ def test_list_artists( Client  ):
 
 
 @pytest.mark.django_db
-def test_create_artists( Client  ):
+def test_create_artists( Client , user  ):
 
-    post_data ={ 
-                 'Stage' : 'yousef ahmed_', 
+    print( user.id )
+
+    post_data = {
+                 'user': user.id, 
+                 'Stage' : 'yousef ahmed___8', 
                  'Social_link' : 'https://www.facebook.com/youssef.amer.7165/' }
 
     response = Client.post('http://127.0.0.1:8000/artists/api' , post_data )
     assert response.data == {
-        'Stage': 'yousef ahmed_',
+        'id' : 1,
+        'user': user.id, 
+        'Stage' : 'yousef ahmed___8', 
         'Social_link' : 'https://www.facebook.com/youssef.amer.7165/'
     }
 

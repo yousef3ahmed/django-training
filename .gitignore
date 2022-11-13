@@ -54,9 +54,11 @@ coverage.xml
 
 #IMG
 *.png
+*.jpg
 
 #mp3
 *.mp3
+
 
 # Translations
 *.mo

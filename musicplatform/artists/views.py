@@ -20,7 +20,6 @@ class api_artist( APIView ):
         return Response(serializer.data, status=200)
 
     def post(self, request, *args, **kwargs):
-        # data = JSONParser().parse(request)
         serializer = ArtistSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
