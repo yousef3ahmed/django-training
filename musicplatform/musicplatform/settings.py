@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-from celery.schedules import crontab
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "authentication",
     "django_filters",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -152,9 +154,10 @@ REST_FRAMEWORK = {
 
 
 CELERY_CONF_BROKER_URL = "redis://127.0.0.1:6379"
+
 CELERY_CONF_BEAT_SCHEDULE = {
     'send_artist_a_reminder_email': {
-        'task': 'albums.tasks.send_artist_a_reminder_email',
-        'schedule': crontab(minute=0, hour='*/24')
+        'task': 'album.tasks.send_artist_a_reminder_email',
+        'schedule': 5.0,
     },
 }

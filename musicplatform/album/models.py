@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from imagekit.processors import ResizeToFill
 from django.core.validators import FileExtensionValidator
-
+from .tasks import congratulation_email
 
 
 
@@ -23,6 +23,12 @@ class Album( TimeStampedModel ):
 
     def __str__(self) -> str:
         return "Name = " + self.name + " <----------------------> Artist = " + self.artist.Stage
+
+    def save(self, *args, **kwargs):
+        congratulation_email.delay(self.artist.user.id, self.name, self.release, self.cost)
+        super(Album, self).save(*args, **kwargs)
+
+
 
 
 class Song( models.Model ):
