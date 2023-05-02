@@ -76,6 +76,6 @@ Traceback (most recent call last):
   File "<console>", line 1, in <module>
   File "D:\bld.ai\projects\Back_end\django_project\musicplatform\artists\models.py", line 49, in save
     raise ValidationError( "album name shouldn't contain inappropriate expressions !!" )
-django.core.exceptions.ValidationError: ["album name shouldn't contain inappropriate expressions !! "]
+django.core.exceptions.ValidationError: ["album name shouldn't contain inappropriate expressions !!"]
 ```
 
